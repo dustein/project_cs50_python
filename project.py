@@ -1,3 +1,8 @@
+import os
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+
 EXERCISES = {
     "caminhada": 2.0,
     "caminhada rapida" : 5.0,
@@ -16,24 +21,36 @@ EXERCISES = {
 }
 
 def main():
-    print("Lista de Exercícios:")
-    for i, exercise in enumerate(EXERCISES.keys(), 1):        
-        print(f'{i} - {exercise}', end="\n")
+    clear_screen()
+    console = Console()
 
-    user_exercise = input("Digite o nome do exercício: ")
+    console.print(Panel.fit("MET Calculator", style="bold black on cyan"))
+    table = Table(title="Exercise List")
+    table.add_column("Option", justify="center", style="cyan", no_wrap=True)
+    table.add_column("Title", style="green")        
+    for i, exercise in enumerate(EXERCISES.keys(), start=1):        
+        table.add_row(str(i), exercise)
+    console.print(table)
+
+    codes_exercises = list(EXERCISES.keys())
+    user_exercise = int(input("Exerice number: "))
     met_value = verify_met(user_exercise)
 
     print(met_value)
 
 
-def verify_met(exercise):
-    exercise_name = exercise.lower().strip()
+def verify_met(number):
+    exercise_index = number - 1
+
+    if 0 <= exercise_index < len(EXERCISES):
+        ...
+
     print(exercise)
     return exercise_name
 
 
-def function_2():
-    ...
+def clear_screen():
+    os.system('cls' if os.name == "nt" else "clear")
 
 
 def function_n():
