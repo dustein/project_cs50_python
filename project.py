@@ -21,40 +21,69 @@ EXERCISES = {
 }
 
 def main():
-    clear_screen()
+    exercises_names = list(EXERCISES.keys())
     console = Console()
+    
+    while True:
+        # PARTE GRAFICA INICIO ---------------
+        clear_screen()
+        console.print(Panel.fit("MET Calculator", style="bold black on cyan"))
+        table = Table(title="Exercise List")
+        table.add_column("Option", justify="center", style="cyan", no_wrap=True)
+        table.add_column("Title", style="green")        
+        for i, exercise in enumerate(EXERCISES.keys(), start=1):        
+            table.add_row(str(i), exercise)
+        console.print(table)
+        # PARTE GRAFICA FIM ---------------
 
-    console.print(Panel.fit("MET Calculator", style="bold black on cyan"))
-    table = Table(title="Exercise List")
-    table.add_column("Option", justify="center", style="cyan", no_wrap=True)
-    table.add_column("Title", style="green")        
-    for i, exercise in enumerate(EXERCISES.keys(), start=1):        
-        table.add_row(str(i), exercise)
-    console.print(table)
+        
+        try:
+            user_response = input('Exercise number (or "x" to exit): ')
+            if user_response.lower() == "x":
+                break
 
-    codes_exercises = list(EXERCISES.keys())
-    user_exercise = int(input("Exerice number: "))
-    met_value = verify_met(user_exercise)
+            user_exercise = int(user_response)
 
-    print(met_value)
+            met_value = verify_met(user_exercise, exercises_names)
+
+            if met_value is None:
+                print("\nThis number is invalid !")
+                input("Press ENTER to try again.")
+                continue
+
+            user_weight = float(input("Your actual weight (kg): "))
+            exercise_duration = int(input("Exercise duration (minutes): "))
 
 
-def verify_met(number):
+            calories_burned = calculate_calories(met_value, user_weight, exercise_duration)
+            
+            print(f'Aproximately {calories_burned:.2f} calories burned during {exercise_duration} minutes of {exercises_names[user_exercise -1]}.\n')
+            another_exercise = input("Calculate another exercise? ( y / n ): ")
+            if another_exercise.lower() != "y":
+                break
+    
+        except ValueError:
+            print("\nInvalid exercise number !")
+            input("Press ENTER to try again...")
+
+
+def verify_met(number, exercise_name):
+
     exercise_index = number - 1
 
     if 0 <= exercise_index < len(EXERCISES):
-        ...
-
-    print(exercise)
-    return exercise_name
+        exercise = exercise_name[exercise_index]
+        return EXERCISES[exercise]
+    
+    return None
 
 
 def clear_screen():
     os.system('cls' if os.name == "nt" else "clear")
 
 
-def function_n():
-    ...
+def calculate_calories(met_value, user_weight, exercise_duration):
+    return met_value * user_weight * exercise_duration / 60
 
 
 if __name__ == "__main__":
