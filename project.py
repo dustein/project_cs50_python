@@ -2,22 +2,23 @@ import os
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
+from datetime import datetime
 
 EXERCISES = {
     "caminhada": 2.0,
-    "caminhada rapida" : 5.0,
+    "caminhada rápida" : 5.0,
     "caminhada em trilha": 6.0,
     "corrida": 8.3,
-    "corrida rapida": 11.5,
+    "corrida rápida": 11.5,
     "ciclismo": 4.0,
     "ciclismo moderado": 6.8,
-    "ginastica": 2.5,
+    "ginástica": 2.5,
     "calistenia": 3.5,
-    "musculacao": 6.0,
-    "circuito": 8.0,
-    "natacao": 5.8,
-    "corda": 8.0,
-    "escadas": 4.0,
+    "musculação": 6.0,
+    "circuito de treino": 8.0,
+    "natação": 5.8,
+    "pular corda": 8.0,
+    "subida e descida de escadas": 4.0,
 }
 
 def main():
@@ -57,6 +58,8 @@ def main():
 
             calories_burned = calculate_calories(met_value, user_weight, exercise_duration)
             
+            save_log(exercises_names[user_exercise -1], calories_burned)
+
             print(f'Aproximately {calories_burned:.2f} calories burned during {exercise_duration} minutes of {exercises_names[user_exercise -1]}.\n')
             another_exercise = input("Calculate another exercise? ( y / n ): ")
             if another_exercise.lower() != "y":
@@ -84,6 +87,20 @@ def clear_screen():
 
 def calculate_calories(met_value, user_weight, exercise_duration):
     return met_value * user_weight * exercise_duration / 60
+
+def save_log(exercise, calories):
+    try:
+        date_to_save = datetime.now().strftime("%d/%m/%Y - %H:%M")
+        log_to_save = f'{date_to_save} - {exercise}: {calories:.2f} calories\n'
+
+        with open("log.txt", "a") as file:
+            file.write(log_to_save)
+
+        return log_to_save.strip()
+
+    except Exception:
+        return "Error saving log..."
+
 
 
 if __name__ == "__main__":
