@@ -28,7 +28,7 @@ def main():
     while True:
         # PARTE GRAFICA INICIO ---------------
         clear_screen()
-        console.print(Panel.fit("MET Calculator", style="bold black on cyan"))
+        console.print(Panel.fit("My CS50x MET Calculator in Python", style="bold black on cyan"))
         table = Table(title="Exercise List")
         table.add_column("Option", justify="center", style="cyan", no_wrap=True)
         table.add_column("Title", style="green")        
