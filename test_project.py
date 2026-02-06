@@ -10,9 +10,14 @@ def test_verify_met():
     assert verify_met(8, NAMES_TEST) is None
 
 
-def test_function_2():
-    ...
+def test_calculate_calories():
+    assert calculate_calories(2.0, 60, 30) == 60.0
+    assert calculate_calories(10.0, 80, 30) == 400.0
+    assert calculate_calories(5.0, 70, 0) == 0.0
 
 
-def test_function_n():
-    ...
+def test_save_log():
+    log_test = save_log("corrida", 300.0)
+    assert os.path.exists("log.txt")
+    assert "corrida" in log_test
+    assert "300.0" in log_test

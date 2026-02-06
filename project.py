@@ -70,12 +70,12 @@ def main():
             input("Press ENTER to try again...")
 
 
-def verify_met(number, exercise_name):
+def verify_met(number, exercises_names):
 
     exercise_index = number - 1
 
-    if 0 <= exercise_index < len(EXERCISES):
-        exercise = exercise_name[exercise_index]
+    if 0 <= exercise_index < len(exercises_names):
+        exercise = exercises_names[exercise_index]
         return EXERCISES[exercise]
     
     return None
